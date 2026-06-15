@@ -7,3 +7,4 @@ tsconfig.tsbuildinfo
 dist/
 build/
 .vscode/settings.json
+public/test-media/

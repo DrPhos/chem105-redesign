@@ -28,9 +28,25 @@ export type Lecture = {
   duration: string;
   summary: string;
   video: {
-    provider: "placeholder" | "cloudflare-stream";
+    provider: "placeholder" | "local-file" | "cloudflare-stream";
     playbackId: string;
     thumbnail: string;
+    source?: {
+      src: string;
+      type: string;
+    };
+    captions?: {
+      src: string;
+      sourceSrc: string;
+      sourceFormat: "srt";
+      kind: "captions" | "subtitles";
+      label: string;
+      srclang: string;
+    };
+    transcript?: {
+      src: string;
+      label: string;
+    };
   };
 };
 
@@ -97,6 +113,7 @@ export const lectures: Lecture[] = chapters.flatMap((chapter) => {
 
   return Array.from({ length: lectureCount }, (_, index) => {
     const lectureNumber = index + 1;
+    const isChapterOneLecture = chapter.number === 1 && lectureNumber === 1;
 
     return {
       id: `chapter-${chapter.number}-lecture-${lectureNumber}`,
@@ -104,14 +121,40 @@ export const lectures: Lecture[] = chapters.flatMap((chapter) => {
       chapterId: chapter.id,
       chapterNumber: chapter.number,
       lectureNumber,
-      title: `Chapter ${chapter.number}, Lecture ${lectureNumber}`,
-      duration: ["18 min", "24 min", "31 min"][index % 3],
-      summary: `${chapter.title}: focused lecture ${lectureNumber} with placeholder video metadata for Version 1.`,
-      video: {
-        provider: "placeholder",
-        playbackId: `placeholder-ch${chapter.number}-l${lectureNumber}`,
-        thumbnail: `/video-placeholder.svg`
-      }
+      title: isChapterOneLecture
+        ? "Chapter 1, Lecture 1: Measurements, Matter, and Scientific Reasoning"
+        : `Chapter ${chapter.number}, Lecture ${lectureNumber}`,
+      duration: isChapterOneLecture ? "Local test lecture" : ["18 min", "24 min", "31 min"][index % 3],
+      summary: isChapterOneLecture
+        ? "Real local test lecture using the Chapter 1 video and transcript files in public/test-media."
+        : `${chapter.title}: focused lecture ${lectureNumber} with placeholder video metadata for Version 1.`,
+      video: isChapterOneLecture
+        ? {
+            provider: "local-file",
+            playbackId: "local-ch1-l1",
+            thumbnail: "/video-placeholder.svg",
+            source: {
+              src: "/test-media/Ch_1.mov",
+              type: "video/quicktime"
+            },
+            captions: {
+              src: "/test-media/Ch_1.vtt",
+              sourceSrc: "/test-media/Ch_1.srt",
+              sourceFormat: "srt",
+              kind: "captions",
+              label: "English",
+              srclang: "en"
+            },
+            transcript: {
+              src: "/test-media/Ch_1.srt",
+              label: "Chapter 1 transcript"
+            }
+          }
+        : {
+            provider: "placeholder",
+            playbackId: `placeholder-ch${chapter.number}-l${lectureNumber}`,
+            thumbnail: `/video-placeholder.svg`
+          }
     };
   });
 });

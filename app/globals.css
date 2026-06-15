@@ -424,9 +424,34 @@ h3 {
   font-weight: 900;
 }
 
+.video-element {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  background: #173f3a;
+  box-shadow: var(--shadow);
+}
+
 .video-details,
 .sidebar-panel {
   padding: 20px;
+}
+
+.transcript-download {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+
+.transcript-download h2 {
+  margin-bottom: 0;
+  font-size: 1.2rem;
 }
 
 .meta-list {

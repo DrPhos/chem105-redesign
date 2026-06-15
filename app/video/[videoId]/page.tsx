@@ -34,15 +34,45 @@ export default async function VideoPage({ params }: VideoPageProps) {
       </div>
       <section className="video-layout">
         <div>
-          <div className="video-player" aria-label={`${lecture.title} video placeholder`}>
-            <span className="play-button" aria-hidden="true">
-              &gt;
-            </span>
-          </div>
+          {lecture.video.source ? (
+            <video
+              className="video-element"
+              controls
+              preload="metadata"
+              poster={lecture.video.thumbnail}
+            >
+              <source src={lecture.video.source.src} type={lecture.video.source.type} />
+              {lecture.video.captions ? (
+                <track
+                  default
+                  kind={lecture.video.captions.kind}
+                  label={lecture.video.captions.label}
+                  src={lecture.video.captions.src}
+                  srcLang={lecture.video.captions.srclang}
+                />
+              ) : null}
+            </video>
+          ) : (
+            <div className="video-player" aria-label={`${lecture.title} video placeholder`}>
+              <span className="play-button" aria-hidden="true">
+                &gt;
+              </span>
+            </div>
+          )}
           <div className="panel video-details">
-            <p className="eyebrow">Placeholder video</p>
+            <p className="eyebrow">
+              {lecture.video.provider === "local-file" ? "Local test video" : "Placeholder video"}
+            </p>
             <h1>{lecture.title}</h1>
             <p className="lead">{lecture.summary}</p>
+            {lecture.video.transcript ? (
+              <div className="transcript-download">
+                <h2>Transcript Available</h2>
+                <a className="button ghost" href={lecture.video.transcript.src} download>
+                  Download transcript
+                </a>
+              </div>
+            ) : null}
           </div>
           <div className="video-nav">
             {previous ? (
@@ -86,6 +116,12 @@ export default async function VideoPage({ params }: VideoPageProps) {
               <dt>Playback ID</dt>
               <dd>{lecture.video.playbackId}</dd>
             </div>
+            {lecture.video.captions ? (
+              <div>
+                <dt>Caption source</dt>
+                <dd>{lecture.video.captions.sourceFormat.toUpperCase()}</dd>
+              </div>
+            ) : null}
           </dl>
         </aside>
       </section>
