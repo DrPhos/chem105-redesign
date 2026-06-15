@@ -1,0 +1,14 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#173F3A"/>
+  <path d="M0 0H1280V720H0V0Z" fill="url(#paint0_linear)"/>
+  <circle cx="640" cy="360" r="82" fill="white" fill-opacity="0.92"/>
+  <path d="M618 312L688 360L618 408V312Z" fill="#17685F"/>
+  <text x="640" y="520" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="42" font-weight="700">CHEM105 Placeholder Video</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="42" y1="40" x2="1138" y2="679" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2B7A6E"/>
+      <stop offset="0.53" stop-color="#173F3A"/>
+      <stop offset="1" stop-color="#C66F2D"/>
+    </linearGradient>
+  </defs>
+</svg>
